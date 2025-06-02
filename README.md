@@ -12,7 +12,7 @@ Projekts izstrādāts kā rīks personīgo finanšu pārvaldībai. Lietotājs va
 
 - Projekts izstrādāts kā noslēguma darbs Liepājas Valsts tehnikuma 4. kursa studenta **Artjoma Čebotara**.
 
-## 🛠️ Izmantotās tehnoloģijas
+## :computer: Izmantotās tehnoloģijas
 
 - **Backend:** PHP, MySQL, phpMyAdmin
 - **Frontend:** HTML, CSS, Tailwind CSS
