@@ -1,0 +1,174 @@
+
+/* Custom CSS for ZaļāAugsme */
+
+/* Gradient button utility */
+.gradient-green {
+    background: linear-gradient(to right, #16a34a, #15803d);
+}
+
+.gradient-green:hover {
+    background: linear-gradient(to right, #15803d, #166534);
+}
+
+/* Currency symbol styling */
+.currency-euro::before {
+    content: "€";
+}
+
+/* Smooth transitions */
+* {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+/* Focus states */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    ring: 2px solid #16a34a;
+    border-color: #16a34a;
+}
+
+/* Loading animations */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #16a34a;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #15803d;
+}
+
+/* Money tree animation styles */
+#money-tree-animation {
+    position: relative;
+    overflow: hidden;
+}
+
+.money-leaf {
+    position: absolute;
+    background: #16a34a;
+    opacity: 0.7;
+    border-radius: 2px;
+    z-index: 10;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form styling */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #16a34a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+}
+
+/* Card hover effects */
+.card-hover {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Prose styling for content pages */
+.prose {
+    color: #374151;
+    max-width: none;
+}
+
+.prose h2 {
+    color: #111827;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.prose h3 {
+    color: #374151;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.prose p {
+    margin-bottom: 1rem;
+    line-height: 1.75;
+}
+
+.prose ul {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.prose li {
+    margin-bottom: 0.5rem;
+}
+
+.prose-lg {
+    font-size: 1.125rem;
+}
+
+/* Responsive design utilities */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* Print styles */
+@media print {
+    .no-print {
+        display: none;
+    }
+}
