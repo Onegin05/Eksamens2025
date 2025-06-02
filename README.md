@@ -1,4 +1,4 @@
-# ZalaAugsme
+# ZaļāAugsme
 
 **ZalaAugsme** — tā ir tīmekļa lietotne ar finanšu kalkulatoru, kas ļauj lietotājiem ērti aprēķināt ienākumus un izdevumus.
 
