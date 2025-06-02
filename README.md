@@ -18,5 +18,5 @@ Projekts izstrādāts kā rīks personīgo finanšu pārvaldībai. Lietotājs va
 - **Frontend:** HTML, CSS, Tailwind CSS
 - **Cits:** TypeScript (TSX, TX)
 
-## 🛠️ Dokumentācija
+## 🛠 :document: Dokumentācija
 [Kvalifikācijas eksāmena tehniskā dokumentācija 2024_25 Cebotars  (4).docx](https://github.com/user-attachments/files/20545234/Kvalifikacijas.eksamena.tehniska.dokumentacija.2024_25.Cebotars.4.docx)
