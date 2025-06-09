@@ -19,4 +19,5 @@ Projekts izstrādāts kā rīks personīgo finanšu pārvaldībai. Lietotājs va
 - **Cits:** TypeScript (TSX, TX)
 
 ##  :bookmark: Dokumentācija
-[Kvalifikācijas eksāmena tehniskā dokumentācija 2024_25 Cebotars  (4).docx](https://github.com/user-attachments/files/20545234/Kvalifikacijas.eksamena.tehniska.dokumentacija.2024_25.Cebotars.4.docx)
+
+[Dokumentācija_Čebotars.docx](https://github.com/user-attachments/files/20649709/Dokumentacija_Cebotars.docx)
