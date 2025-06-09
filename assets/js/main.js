@@ -1,4 +1,3 @@
-
 // Main JavaScript functionality for ZaļāAugsme
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -51,10 +50,61 @@ document.addEventListener('DOMContentLoaded', function() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Show success message (you can replace this with actual form submission)
-            alert('Ziņa nosūtīta! Mēs ar jums sazināsimies tuvākajā laikā.');
-            contactModal.classList.add('hidden');
-            contactForm.reset();
+            if (!validateForm(this)) {
+                alert('Lūdzu, aizpildiet visus obligātos laukus un pārliecinieties, ka e-pasta adrese ir pareiza.');
+                return;
+            }
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.textContent;
+            
+            // Disable submit button and show loading state
+            submitButton.disabled = true;
+            submitButton.textContent = 'Nosūta...';
+            
+            // Get form data
+            const formData = {
+                name: this.name.value.trim(),
+                email: this.email.value.trim(),
+                message: this.message.value.trim()
+            };
+            
+            console.log('Sending form data:', formData); // Debug log
+            
+            // Send data to API
+            fetch('api/contact/send.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                console.log('Response status:', response.status); // Debug log
+                return response.json();
+            })
+            .then(data => {
+                console.log('Response data:', data); // Debug log
+                if (data.success) {
+                    // Show success message
+                    alert('Paldies! Jūsu ziņa ir nosūtīta. Mēs ar jums sazināsimies pēc iespējas ātrāk.');
+                    contactModal.classList.add('hidden');
+                    contactForm.reset();
+                } else {
+                    // Show error message
+                    alert(data.error || 'Kļūda nosūtot ziņu. Lūdzu, mēģiniet vēlreiz.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error); // Debug log
+                // Show error message
+                alert('Kļūda nosūtot ziņu. Lūdzu, mēģiniet vēlreiz.');
+            })
+            .finally(() => {
+                // Re-enable submit button
+                submitButton.disabled = false;
+                submitButton.textContent = originalButtonText;
+            });
         });
     }
 

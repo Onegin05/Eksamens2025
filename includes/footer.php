@@ -1,4 +1,6 @@
-
+<?php
+$current_year = date('Y');
+?>
     <!-- Contact Button -->
     <div class="fixed right-6 bottom-6 z-40">
         <button id="contact-btn" class="bg-green-600 hover:bg-green-700 h-14 w-14 rounded-full shadow-lg text-white transition-colors">
@@ -9,55 +11,50 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-50 border-t border-gray-200 py-12">
-        <div class="container px-4 sm:px-6 lg:px-8 mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="space-y-4">
-                    <a href="index.php" class="flex items-center gap-2">
-                        <div class="bg-gradient-to-r from-green-500 to-green-600 p-2 rounded-lg">
-                            <svg class="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 002 2z"></path>
-                            </svg>
-                        </div>
-                        <span class="text-lg font-bold text-gray-800">ZaļāAugsme</span>
-                    </a>
-                    <p class="text-gray-600 text-sm">
-                        Palīdzam pieņemt gudrākus finanšu lēmumus ar intuitīviem rīkiem un izglītību.
+    <footer class="bg-white border-t border-gray-200">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Company Info -->
+                <div class="col-span-1">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">ZaļāAugsme</h3>
+                    <p class="text-gray-600 mb-4">
+                        Palīdzam jauniešiem sasniegt finanšu neatkarību caur izglītību un praktiskiem rīkiem.
                     </p>
                 </div>
 
+                <!-- Quick Links -->
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Produkti</h3>
-                    <ul class="space-y-3">
-                        <li><a href="calculator.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Budžeta kalkulators</a></li>
-                        <li><a href="tools.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Finanšu rīki</a></li>
-                        <li><a href="tips.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Finanšu padomi</a></li>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Ātrās saites</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="<?php echo $base_url; ?>about.php" class="text-gray-600 hover:text-gray-900">Par mums</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url; ?>faq.php" class="text-gray-600 hover:text-gray-900">FAQ</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url; ?>contact.php" class="text-gray-600 hover:text-gray-900">Kontakti</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $base_url; ?>privacy.php" class="text-gray-600 hover:text-gray-900">Privātuma politika</a>
+                        </li>
                     </ul>
                 </div>
 
+                <!-- Resources -->
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Uzņēmums</h3>
-                    <ul class="space-y-3">
-                        <li><a href="about.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Par mums</a></li>
-                        <li><a href="blog.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Blogs</a></li>
-                        <li><a href="careers.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Karjera</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h3 class="text-sm font-semibold text-gray-900 mb-4">Atbalsts</h3>
-                    <ul class="space-y-3">
-                        <li><a href="contact.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Kontakti</a></li>
-                        <li><a href="faq.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">BUJ</a></li>
-                        <li><a href="privacy.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Privātuma politika</a></li>
-                        <li><a href="terms.php" class="text-gray-600 hover:text-green-600 text-sm transition-colors">Noteikumi</a></li>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Resursi</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="<?php echo $base_url; ?>budget.php" class="text-gray-600 hover:text-gray-900">Finanšu plānotājs</a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <div class="mt-12 pt-8 border-t border-gray-200">
-                <p class="text-center text-gray-500 text-sm">
-                    © <?php echo date('Y'); ?> ZaļāAugsme Finanšu Pakalpojumi. Visas tiesības aizsargātas.
+                <p class="text-center text-gray-500">
+                    &copy; <?php echo $current_year; ?> ZaļāAugsme. Visas tiesības aizsargātas.
                 </p>
             </div>
         </div>
@@ -77,7 +74,7 @@
                 </div>
                 <p class="text-gray-600 mb-4">Atsūtiet mums ziņu, un mēs ar jums sazināsimies pēc iespējas ātrāk.</p>
                 
-                <form id="contact-form" action="contact.php" method="POST">
+                <form id="contact-form">
                     <div class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium mb-1">Vārds</label>

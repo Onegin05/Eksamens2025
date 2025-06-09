@@ -1,4 +1,3 @@
-
 <?php
 // Common functions for the website
 
@@ -18,7 +17,8 @@ function is_logged_in() {
 }
 
 function get_current_page() {
-    return basename($_SERVER['PHP_SELF']);
+    $current_file = basename($_SERVER['PHP_SELF']);
+    return $current_file;
 }
 
 function redirect($url) {

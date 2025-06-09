@@ -1,10 +1,14 @@
 <?php
 session_start();
-$page_title = "Ieiet - ZaļāAugsme";
+$page_title = "Ienākt - ZaļāAugsme";
 include 'includes/header.php';
 
-$loginError = $_SESSION['login_error'] ?? '';
-unset($_SESSION['login_error']);
+// Check for error messages
+$errorMessage = '';
+if (isset($_SESSION['login_error'])) {
+    $errorMessage = $_SESSION['login_error'];
+    unset($_SESSION['login_error']);
+}
 ?>
 
 <main class="flex-grow">
@@ -13,27 +17,45 @@ unset($_SESSION['login_error']);
             <div>
                 <div class="mx-auto h-12 w-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
                     <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
                     </svg>
                 </div>
                 <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">
-                    Ieiet kontā
+                    Ienākt kontā
                 </h2>
+
+                <?php if (isset($_GET['registered']) && $_GET['registered'] == '1'): ?>
+                    <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-green-800">
+                                    Reģistrācija veiksmīga! Lūdzu, ienāciet savā kontā.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php if ($errorMessage): ?>
+                    <div style="background-color:#F8D7DA; color:#721C24; padding:15px; border-radius:5px; margin:20px 0;">
+                        <?= htmlspecialchars($errorMessage) ?>
+                    </div>
+                <?php endif; ?>
+
                 <p class="mt-2 text-center text-sm text-gray-600">
                     Vai
                     <a href="register.php" class="font-medium text-green-600 hover:text-green-500">
-                        izveidojiet jaunu kontu
+                        izveidot jaunu kontu
                     </a>
                 </p>
-
-                <?php if ($loginError): ?>
-                    <div class="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
-                        <span class="block sm:inline"><?= htmlspecialchars($loginError) ?></span>
-                    </div>
-                <?php endif; ?>
             </div>
 
-            <form class="mt-8 space-y-6" action="api/auth/login.php" method="POST">
+            <form class="mt-8 space-y-6" action="api/auth/login.php" method="POST" id="loginForm">
                 <div class="space-y-4">
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">
@@ -60,7 +82,7 @@ unset($_SESSION['login_error']);
                             autocomplete="current-password" 
                             required 
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
-                            placeholder="Jūsu parole"
+                            placeholder="Ievadiet savu paroli"
                         >
                     </div>
                 </div>
@@ -80,7 +102,7 @@ unset($_SESSION['login_error']);
 
                     <div class="text-sm">
                         <a href="#" class="font-medium text-green-600 hover:text-green-500">
-                            Aizmirsta parole?
+                            Aizmirsi paroli?
                         </a>
                     </div>
                 </div>
@@ -89,13 +111,67 @@ unset($_SESSION['login_error']);
                     <button 
                         type="submit" 
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all"
+                        id="loginButton"
                     >
-                        Ieiet
+                        Ienākt
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </main>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const loginButton = document.getElementById('loginButton');
+    loginButton.disabled = true;
+    loginButton.textContent = 'Ienākšana...';
+
+    fetch('api/auth/login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = 'profile.php';
+        } else {
+            const errorDiv = document.createElement('div');
+            errorDiv.style.backgroundColor = '#F8D7DA';
+            errorDiv.style.color = '#721C24';
+            errorDiv.style.padding = '15px';
+            errorDiv.style.borderRadius = '5px';
+            errorDiv.style.margin = '20px 0';
+            errorDiv.textContent = data.error || 'Kļūda ienākot sistēmā';
+            
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+            errorDiv.className = 'error-message';
+            this.insertBefore(errorDiv, this.firstChild);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const errorDiv = document.createElement('div');
+        errorDiv.style.backgroundColor = '#F8D7DA';
+        errorDiv.style.color = '#721C24';
+        errorDiv.style.padding = '15px';
+        errorDiv.style.borderRadius = '5px';
+        errorDiv.style.margin = '20px 0';
+        errorDiv.textContent = 'Kļūda ienākot sistēmā';
+        errorDiv.className = 'error-message';
+        this.insertBefore(errorDiv, this.firstChild);
+    })
+    .finally(() => {
+        loginButton.disabled = false;
+        loginButton.textContent = 'Ienākt';
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>

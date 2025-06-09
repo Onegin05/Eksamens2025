@@ -75,9 +75,14 @@ $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, email, passwor
 $stmt->bind_param("ssss", $firstName, $lastName, $email, $passwordHash);
 
 if ($stmt->execute()) {
-    $userName = urlencode($firstName . " " . $lastName);
-    header("Location: ../../register.php?success=1&name=$userName");
-    exit;
+    echo json_encode([
+        "success" => true,
+        "message" => "Registration successful",
+        "user" => [
+            "name" => $firstName . " " . $lastName,
+            "email" => $email
+        ]
+    ]);
 } else {
     http_response_code(500);
     echo json_encode(["error" => "Failed to insert user"]);

@@ -1,26 +1,7 @@
-
 <?php
 session_start();
 $page_title = "Kontakti - ZaļāAugsme";
 include 'includes/header.php';
-
-$message_sent = false;
-$error_message = '';
-
-if ($_POST) {
-    $name = sanitize_input($_POST['name'] ?? '');
-    $email = sanitize_input($_POST['email'] ?? '');
-    $message = sanitize_input($_POST['message'] ?? '');
-    
-    if (empty($name) || empty($email) || empty($message)) {
-        $error_message = 'Lūdzu, aizpildiet visus laukus.';
-    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error_message = 'Lūdzu, ievadiet derīgu e-pasta adresi.';
-    } else {
-        // Here you would typically send an email or save to database
-        $message_sent = true;
-    }
-}
 ?>
 
 <main class="flex-grow">
@@ -45,19 +26,16 @@ if ($_POST) {
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-2xl mx-auto">
-                <?php if ($message_sent): ?>
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
-                        Paldies! Jūsu ziņa ir nosūtīta. Mēs ar jums sazināsimies pēc iespējas ātrāk.
+                <div id="form-message" class="hidden mb-6 px-4 py-3 rounded flex items-center">
+                    <div class="flex-shrink-0 mr-3">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
                     </div>
-                <?php endif; ?>
+                    <span class="block sm:inline"></span>
+                </div>
 
-                <?php if ($error_message): ?>
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-                        <?php echo $error_message; ?>
-                    </div>
-                <?php endif; ?>
-
-                <form method="POST" class="space-y-6">
+                <form id="main-contact-form" class="space-y-6">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
                             Vārds *
@@ -69,7 +47,6 @@ if ($_POST) {
                             required 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Jūsu vārds"
-                            value="<?php echo $_POST['name'] ?? ''; ?>"
                         >
                     </div>
 
@@ -84,7 +61,6 @@ if ($_POST) {
                             required 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="jusu.epasts@piemers.lv"
-                            value="<?php echo $_POST['email'] ?? ''; ?>"
                         >
                     </div>
 
@@ -99,7 +75,7 @@ if ($_POST) {
                             required 
                             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Jūsu ziņa..."
-                        ><?php echo $_POST['message'] ?? ''; ?></textarea>
+                        ></textarea>
                     </div>
 
                     <button 
@@ -155,5 +131,58 @@ if ($_POST) {
         </div>
     </section>
 </main>
+
+<script>
+document.getElementById('main-contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formMessage = document.getElementById('form-message');
+    const form = this;
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    // Disable submit button
+    submitButton.disabled = true;
+    submitButton.textContent = 'Nosūta...';
+    
+    // Get form data
+    const formData = {
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        message: form.message.value.trim()
+    };
+    
+    // Send data to API
+    fetch('api/contact/send.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        formMessage.classList.remove('hidden');
+        
+        if (data.success) {
+            formMessage.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6 flex items-center animate-fade-in';
+            formMessage.querySelector('span').textContent = 'Paldies! Jūsu ziņa ir nosūtīta. Mēs ar jums sazināsimies pēc iespējas ātrāk.';
+            form.reset();
+        } else {
+            formMessage.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 flex items-center animate-fade-in';
+            formMessage.querySelector('span').textContent = data.error || 'Kļūda nosūtot ziņu. Lūdzu, mēģiniet vēlreiz.';
+        }
+    })
+    .catch(error => {
+        formMessage.classList.remove('hidden');
+        formMessage.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6 flex items-center animate-fade-in';
+        formMessage.querySelector('span').textContent = 'Kļūda nosūtot ziņu. Lūdzu, mēģiniet vēlreiz.';
+    })
+    .finally(() => {
+        // Re-enable submit button
+        submitButton.disabled = false;
+        submitButton.textContent = 'Nosūtīt ziņu';
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>

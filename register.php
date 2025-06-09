@@ -38,7 +38,7 @@ if (isset($_GET['success']) && $_GET['success'] == '1' && isset($_GET['name'])) 
                 </p>
             </div>
 
-            <form class="mt-8 space-y-6" action="api/auth/register.php" method="POST">
+            <form class="mt-8 space-y-6" action="api/auth/register.php" method="POST" id="registerForm">
                 <div class="space-y-4">
                     <div>
                         <label for="name" class="block text-sm font-medium text-gray-700">
@@ -50,6 +50,8 @@ if (isset($_GET['success']) && $_GET['success'] == '1' && isset($_GET['name'])) 
                             type="text" 
                             autocomplete="name" 
                             required 
+                            pattern="[A-Za-zĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž\s]+"
+                            title="Lūdzu ievadiet tikai burtus un atstarpes"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Jānis Bērziņš"
                         >
@@ -78,9 +80,11 @@ if (isset($_GET['success']) && $_GET['success'] == '1' && isset($_GET['name'])) 
                             type="password" 
                             autocomplete="new-password" 
                             required 
+                            minlength="8"
                             class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-green-500 focus:border-green-500"
                             placeholder="Izvēlieties drošu paroli"
                         >
+                        <p class="mt-1 text-sm text-gray-500">Parolei jābūt vismaz 8 rakstzīmēm garai</p>
                     </div>
                     <div>
                         <label for="password-confirm" class="block text-sm font-medium text-gray-700">
@@ -108,15 +112,16 @@ if (isset($_GET['success']) && $_GET['success'] == '1' && isset($_GET['name'])) 
                     >
                     <label for="terms" class="ml-2 block text-sm text-gray-900">
                         Es piekrītu 
-                        <a href="#" class="text-green-600 hover:text-green-500">lietošanas noteikumiem</a>
+                        <a href="terms.php" class="text-green-600 hover:text-green-500">lietošanas noteikumiem</a>
                         un 
-                        <a href="#" class="text-green-600 hover:text-green-500">privātuma politikai</a>
+                        <a href="privacy.php" class="text-green-600 hover:text-green-500">privātuma politikai</a>
                     </label>
                 </div>
 
                 <div>
                     <button 
                         type="submit" 
+                        id="registerButton"
                         class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all"
                     >
                         Izveidot kontu
@@ -126,5 +131,110 @@ if (isset($_GET['success']) && $_GET['success'] == '1' && isset($_GET['name'])) 
         </div>
     </div>
 </main>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('password-confirm').value;
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const terms = document.getElementById('terms').checked;
+    
+    // Reset previous error messages
+    const errorMessages = document.querySelectorAll('.error-message');
+    errorMessages.forEach(msg => msg.remove());
+    
+    let hasError = false;
+    
+    // Validate name (only letters and spaces)
+    if (!/^[A-Za-zĀāČčĒēĢģĪīĶķĻļŅņŠšŪūŽž\s]+$/.test(name)) {
+        showError('Vārdā var būt tikai burti un atstarpes');
+        hasError = true;
+    }
+    
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('Lūdzu ievadiet derīgu e-pasta adresi');
+        hasError = true;
+    }
+    
+    // Validate password length
+    if (password.length < 8) {
+        showError('Parolei jābūt vismaz 8 rakstzīmēm garai');
+        hasError = true;
+    }
+    
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        showError('Paroles nesakrīt');
+        hasError = true;
+    }
+    
+    // Check terms
+    if (!terms) {
+        showError('Lūdzu piekrītiet lietošanas noteikumiem un privātuma politikai');
+        hasError = true;
+    }
+    
+    if (hasError) {
+        return;
+    }
+    
+    // Disable submit button and show loading state
+    const submitButton = document.getElementById('registerButton');
+    submitButton.disabled = true;
+    submitButton.textContent = 'Reģistrējas...';
+    
+    // Submit form
+    const formData = new FormData(this);
+    fetch('api/auth/register.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message and redirect to login
+            const successDiv = document.createElement('div');
+            successDiv.style.backgroundColor = '#D4EDDA';
+            successDiv.style.color = '#155724';
+            successDiv.style.padding = '15px';
+            successDiv.style.borderRadius = '5px';
+            successDiv.style.margin = '20px 0';
+            successDiv.textContent = 'Reģistrācija veiksmīga! Tiek veikta pārvirzīšana uz pieteikšanās lapu...';
+            this.insertBefore(successDiv, this.firstChild);
+            
+            // Redirect to login page after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'login.php?registered=1';
+            }, 2000);
+        } else {
+            showError(data.error || 'Kļūda reģistrējoties');
+            submitButton.disabled = false;
+            submitButton.textContent = 'Izveidot kontu';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showError('Kļūda reģistrējoties');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Izveidot kontu';
+    });
+});
+
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.backgroundColor = '#F8D7DA';
+    errorDiv.style.color = '#721C24';
+    errorDiv.style.padding = '15px';
+    errorDiv.style.borderRadius = '5px';
+    errorDiv.style.margin = '20px 0';
+    errorDiv.textContent = message;
+    errorDiv.className = 'error-message';
+    document.getElementById('registerForm').insertBefore(errorDiv, document.getElementById('registerForm').firstChild);
+}
+</script>
 
 <?php include 'includes/footer.php'; ?>

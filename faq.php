@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 $page_title = "Biežāk uzdotie jautājumi - ZaļāAugsme";
@@ -17,7 +16,7 @@ include 'includes/header.php';
                 </div>
                 <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Biežāk uzdotie jautājumi</h1>
                 <p class="text-xl text-gray-600 leading-relaxed">
-                    Atrodiet atbildes uz visbiežāk uzdotajiem jautājumiem par ZaļāAugsme pakalpojumiem.
+                    Atrodiet atbildes uz biežāk uzdotajiem jautājumiem par ZaļāAugsme platformu un tās funkcijām.
                 </p>
             </div>
         </div>
@@ -27,105 +26,170 @@ include 'includes/header.php';
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto">
-                <div class="space-y-6">
-                    <!-- FAQ Item 1 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Vai ZaļāAugsme pakalpojumi ir bezmaksas?
-                        </h3>
-                        <p class="text-gray-600">
-                            Jā! Visi mūsu pamata rīki, ieskaitot budžeta kalkulatoru un finanšu padomus, ir pilnībā bezmaksas. Mūsu mērķis ir padarīt finanšu plānošanu pieejamu ikvienam.
-                        </p>
-                    </div>
+                <!-- General Questions -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Vispārīgi jautājumi</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kas ir ZaļāAugsme?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    ZaļāAugsme ir platforma, kas palīdz jauniešiem pārvaldīt savas finanses un sasniegt finanšu neatkarību. Mēs piedāvājam intuitīvus rīkus budžeta plānošanai, izdevumu sekšanai un finanšu mērķu sasniegšanai.
+                                </p>
+                            </div>
+                        </div>
 
-                    <!-- FAQ Item 2 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Kā darbojas budžeta kalkulators?
-                        </h3>
-                        <p class="text-gray-600">
-                            Mūsu budžeta kalkulators ļauj jums ievadīt savus mēneša ienākumus un izdevumus, pēc tam automātiski aprēķina jūsu budžeta bilanci un sniedz personalizētus ieteikumus uzlabojumiem. Visi aprēķini notiek jūsu pārlūkprogrammā - mēs nesaglabājam jūsu finanšu datus.
-                        </p>
-                    </div>
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kā sākt lietot ZaļāAugsme?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Lai sāktu lietot ZaļāAugsme, jums jāizveido bezmaksas konts. Pēc reģistrācijas jūs varēsiet piekļūt visām platformas funkcijām, ieskaitot budžeta plānotāju, izdevumu sekšanu un finanšu mērķu iestatīšanu.
+                                </p>
+                            </div>
+                        </div>
 
-                    <!-- FAQ Item 3 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Vai mani finanšu dati ir drošībā?
-                        </h3>
-                        <p class="text-gray-600">
-                            Jā, jūsu privātums ir mums ļoti svarīgs. Visi aprēķini notiek lokāli jūsu ierīcē, un mēs nesaglabājam nekādus jūsu finanšu datus mūsu serveros. Mēs ievērojam visus GDPR noteikumus.
-                        </p>
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Vai ZaļāAugsme ir bezmaksas?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Jā, ZaļāAugsme ir pilnībā bezmaksas platforma. Mēs ticam, ka finanšu izglītība un rīki būtu pieejami ikvienam, tāpēc mēs neiekasējam maksu par mūsu pakalpojumu izmantošanu.
+                                </p>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- FAQ Item 4 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Kādu valūtu izmanto jūsu rīki?
-                        </h3>
-                        <p class="text-gray-600">
-                            Visi mūsu rīki izmanto Eiro (€) kā galveno valūtu, kas ir Latvijas oficiālā valūta. Visi aprēķini un piemēri ir pielāgoti Latvijas tirgum.
-                        </p>
+                <!-- Features Questions -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Funkcijas un iespējas</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kā strādā budžeta plānotājs?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Budžeta plānotājs ļauj jums izsekot saviem ienākumiem un izdevumiem, kategorizēt transakcijas un iestatīt finanšu mērķus. Jūs varat pievienot ienākumus un izdevumus, skatīt detalizētu analīzi un saņemt ieteikumus par budžeta optimizāciju.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kā iestatīt finanšu mērķus?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Lai iestatītu finanšu mērķus, dodieties uz "Mērķi" sadaļu un nospiediet "Pievienot mērķi". Jūs varat izvēlēties mērķa veidu (piemēram, uzkrājumi, parāda atmaksa), iestatīt summu un termiņu. Platforma palīdzēs jums izsekot progresam un sniegs ieteikumus mērķa sasniegšanai.
+                                </p>
+                            </div>
+                        </div>
                     </div>
+                </div>
 
-                    <!-- FAQ Item 5 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Vai jūs sniedzat personalizētas finanšu konsultācijas?
-                        </h3>
-                        <p class="text-gray-600">
-                            Pašlaik mēs piedāvājam tikai automatizētus rīkus un vispārīgus padomus. Taču mēs plānojam nākotnē pievienot personalizētu konsultāciju pakalpojumus. Sekojiet mūsu jaunumiem, lai uzzinātu vairāk!
-                        </p>
-                    </div>
+                <!-- Security Questions -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6">Drošība un konfidencialitāte</h2>
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kā droša ir mana informācija?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Mēs izmantojam vairākus drošības līmeņus, lai aizsargātu jūsu datus. Visi dati tiek šifrēti, un mēs nekad nesakopojam jūsu bankas konta informāciju. Mūsu platforma atbilst visiem modernajiem drošības standartiem.
+                                </p>
+                            </div>
+                        </div>
 
-                    <!-- FAQ Item 6 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Kā es varu uzzināt par jauniem rīkiem un funkcijām?
-                        </h3>
-                        <p class="text-gray-600">
-                            Abonējiet mūsu biļetenu vai sekojiet mūsu blogam, lai saņemtu informāciju par jaunākajiem rīkiem, funkcijām un finanšu padomiem. Mēs regulāri pievienojam jaunas funkcijas!
-                        </p>
-                    </div>
-
-                    <!-- FAQ Item 7 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Vai es varu izmantot ZaļāAugsme mobilajā ierīcē?
-                        </h3>
-                        <p class="text-gray-600">
-                            Jā! Mūsu tīmekļa vietne ir pilnībā optimizēta mobilajām ierīcēm. Jūs varat piekļūt visiem rīkiem un funkcijām no sava viedtālruņa vai planšetdatora.
-                        </p>
-                    </div>
-
-                    <!-- FAQ Item 8 -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">
-                            Kā es varu sazināties ar atbalsta komandu?
-                        </h3>
-                        <p class="text-gray-600">
-                            Jūs varat sazināties ar mums, izmantojot kontaktu formu mūsu tīmekļa vietnē, nosūtot e-pastu uz info@zalaugsme.lv vai zvanot uz +371 20 123 456. Mēs atbildam visām ziņām 24 stundu laikā.
-                        </p>
+                        <div class="bg-white rounded-lg border border-gray-200">
+                            <button class="w-full px-6 py-4 text-left focus:outline-none" onclick="toggleFAQ(this)">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-lg font-medium text-gray-900">Kā es varu dzēst savu kontu?</span>
+                                    <svg class="h-5 w-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="px-6 pb-4 hidden">
+                                <p class="text-gray-600">
+                                    Lai dzēstu savu kontu, dodieties uz profila iestatījumiem un atrodiet opciju "Dzēst kontu". Pirms konta dzēšanas jums būs jāapstiprina šī darbība. Pēc konta dzēšanas visi jūsu dati tiks neatgriezeniski dzēsti no mūsu sistēmas.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
+    <!-- Contact Section -->
     <section class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Neradāt atbildi uz savu jautājumu?</h2>
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Vai neatradāt atbildi?</h2>
                 <p class="text-xl text-gray-600 mb-8">
-                    Sazināties ar mums, un mēs ar prieku palīdzēsim!
+                    Sazinieties ar mūsu atbalsta komandu, un mēs ar prieku palīdzēsim jums
                 </p>
-                <a href="contact.php" class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 transition-all shadow-lg">
+                <a href="contact.php" class="inline-block bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
                     Sazināties ar mums
                 </a>
             </div>
         </div>
     </section>
 </main>
+
+<script>
+function toggleFAQ(button) {
+    const content = button.nextElementSibling;
+    const icon = button.querySelector('svg');
+    
+    // Toggle content visibility
+    content.classList.toggle('hidden');
+    
+    // Rotate icon
+    if (content.classList.contains('hidden')) {
+        icon.classList.remove('rotate-180');
+    } else {
+        icon.classList.add('rotate-180');
+    }
+}
+</script>
 
 <?php include 'includes/footer.php'; ?>
